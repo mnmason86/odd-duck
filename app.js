@@ -12,7 +12,6 @@ function OddDuckProducts(name,imgPath){
   this.imgTimesShown = 0;
   this.imgTimesClicked = 0;
   OddDuckProducts.allProducts.push(this);
-
 }
 
 new OddDuckProducts('baby-sweep', 'img/baby-sweep.png');
@@ -39,38 +38,29 @@ new OddDuckProducts('wine-glass', 'img/wine-glass.jpg');
 
 // Random number generator to select imgs from array
 
-function createRandomProduct(){
+let randomImages = [];
+
+function createRandomProducts(){
   let randProduct = Math.floor(Math.random() * OddDuckProducts.allProducts.length);
-  return OddDuckProducts.allProducts[randProduct];
+  randomImages.push(randProduct);
 }
-
-let image1 = createRandomProduct();
-let image2 = createRandomProduct();
-let image3 = createRandomProduct();
-
-//Get image elements from the DOM
-
-let bodyContainer = document.getElementById('product1');
-let imgContainer = document.createElement('img');
-imgContainer.src = `img/${image1.name}.jpg`, `img/${image2.name}.jpg`, `img/${image3.name}.jpg`;
-bodyContainer.appendChild(imgContainer);
-
-let bodyContainer2 = document.getElementById('product2');
-let imgContainer2 = document.createElement('img');
-imgContainer2.src =`img/${image2.name}.jpg`;
-bodyContainer2.appendChild(imgContainer2);
-
-let bodyContainer3 = document.getElementById('product3');
-let imgContainer3 = document.createElement('img');
-imgContainer3.src =`img/${image3.name}.jpg`;
-bodyContainer3.appendChild(imgContainer3);
-
-console.log(image1,image2,image3);
+createRandomProducts();
+createRandomProducts();
+createRandomProducts();
 
 // Attach an Event Listener to the section of the HTML page where images are displayed.
 
-
-
 // Generate 3 new random products after user click.
+
+//Get image elements from the DOM and render
+
+OddDuckProducts.prototype.render = function(){
+  let bodyContainer = document.getElementById('product-images');
+  let imgContainer = document.createElement('img');
+  imgContainer.src = `img/${image.name}.jpg`;
+  bodyContainer.appendChild(imgContainer);
+  imgContainer.width = 300;
+};
+
 
 

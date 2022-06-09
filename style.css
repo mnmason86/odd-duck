@@ -1,0 +1,17 @@
+div{
+  display: flex;
+  flex-direction: row;
+}
+
+/* #product1{
+  height: 100px;
+  width: 100px;
+}
+#product2{
+  height: 100px;
+  width: 100px;
+}
+#product3{
+  height: 100px;
+  width: 100px;
+} */
