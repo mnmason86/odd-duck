@@ -4,7 +4,6 @@
 let currentClicks = 0;
 let totalClicksAllowed = 25;
 let randomImages = [];
-let numberOfImages = 3;
 
 // Create a constructor function that creates an object associated with each product
 
@@ -24,7 +23,7 @@ let allProducts = [
   new OddDuckProduct('chair', 'img/chair.jpg'),
   new OddDuckProduct('cthulhu', 'img/cthulu.jpg'),
   new OddDuckProduct('dog-duck', 'img/dog-duck.jpg'),
-  new OddDuckProduct('dragon', 'img/dragon,jpg'),
+  new OddDuckProduct('dragon', 'img/dragon.jpg'),
   new OddDuckProduct('pen', 'img/pen.jpg'),
   new OddDuckProduct('pet-sweep', 'img/pet-sweep.jpg'),
   new OddDuckProduct('r2bag', 'img/r2bag.jpg'),
@@ -35,8 +34,6 @@ let allProducts = [
   new OddDuckProduct('water-can', 'img/water-can.jpg'),
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
-
-// Create an algorithm that randomly generates 3 unique product images from the img directory and display them side-by-side in the browser window
 
 // Random number generator to select imgs from array
 
@@ -49,16 +46,12 @@ randomImages.push(createRandomProducts());
 randomImages.push(createRandomProducts());
 randomImages.push(createRandomProducts());
 
-
-console.log(randomImages);
-
-
 // Create render method for 1 image
 
 OddDuckProduct.prototype.render = function(){
   let bodyContainer = document.getElementById('product-images');
   let imgContainer = document.createElement('img');
-  imgContainer.src = `img/${this.name}.jpg`;
+  imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
   imgContainer.width = 300;
 };
@@ -70,10 +63,7 @@ for(let i = 0; i < randomImages.length; i++){
   randomImage.render();
 }
 
-
 // Attach an Event Listener to the section of the HTML page where images are displayed.
 
 // Generate 3 new random products after user click.
-
-//Get image elements from the DOM and render
 
