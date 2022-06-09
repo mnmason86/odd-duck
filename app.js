@@ -15,25 +15,25 @@ function OddDuckProducts(name,imgPath){
 
 }
 
-let babySweep = new OddDuckProducts('baby-sweep', 'img/baby-sweep.png');
-let banana = new OddDuckProducts('banana', 'img/banana.jpg');
-let bathroom = new OddDuckProducts('bathroom', 'img/bathroom.jpg');
-let boots = new OddDuckProducts('boots', 'img/boots.jpg');
-let breakfast = new OddDuckProducts('breakfast', 'img/breakfast.jpg');
-let bubblegum = new OddDuckProducts('bubblegum', 'img/bubblegum.jpg');
-let chair = new OddDuckProducts('chair', 'img/chair.jpg');
-let cthulu = new OddDuckProducts('cthulu', 'img/cthulu.jpg');
-let dogDuck = new OddDuckProducts('dog-duck', 'img/dog-duck.jpg');
-let dragon = new OddDuckProducts('dragon', 'img/dragon,jpg');
-let pen = new OddDuckProducts('pen', 'img/pen.jpg');
-let petSweep = new OddDuckProducts('pet-sweep', 'img/pet-sweep.jpg');
-let r2bag = new OddDuckProducts('r2bag', 'img/r2bag.jpg');
-let scissors = new OddDuckProducts('scissors', 'img/scissors.jpg');
-let shark = new OddDuckProducts('shark', 'img/shark.jpg');
-let tauntaun = new OddDuckProducts('tauntaun', 'img/tauntaun.jpg');
-let unicorn = new OddDuckProducts('unicorn', 'img/unicorn.jpg');
-let waterCan = new OddDuckProducts('water-can', 'img/water-can.jpg');
-let wineGlass = new OddDuckProducts('wine-glass', 'img/wine-glass.jpg');
+new OddDuckProducts('baby-sweep', 'img/baby-sweep.png');
+new OddDuckProducts('banana', 'img/banana.jpg');
+new OddDuckProducts('bathroom', 'img/bathroom.jpg');
+new OddDuckProducts('boots', 'img/boots.jpg');
+new OddDuckProducts('breakfast', 'img/breakfast.jpg');
+new OddDuckProducts('bubblegum', 'img/bubblegum.jpg');
+new OddDuckProducts('chair', 'img/chair.jpg');
+new OddDuckProducts('cthulu', 'img/cthulu.jpg');
+new OddDuckProducts('dog-duck', 'img/dog-duck.jpg');
+new OddDuckProducts('dragon', 'img/dragon,jpg');
+new OddDuckProducts('pen', 'img/pen.jpg');
+new OddDuckProducts('pet-sweep', 'img/pet-sweep.jpg');
+new OddDuckProducts('r2bag', 'img/r2bag.jpg');
+new OddDuckProducts('scissors', 'img/scissors.jpg');
+new OddDuckProducts('shark', 'img/shark.jpg');
+new OddDuckProducts('tauntaun', 'img/tauntaun.jpg');
+new OddDuckProducts('unicorn', 'img/unicorn.jpg');
+new OddDuckProducts('water-can', 'img/water-can.jpg');
+new OddDuckProducts('wine-glass', 'img/wine-glass.jpg');
 
 
 console.log(OddDuckProducts.allProducts);
