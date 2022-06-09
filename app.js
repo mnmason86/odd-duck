@@ -4,6 +4,7 @@
 let currentClicks = 0;
 let totalClicksAllowed = 25;
 let randomImages = [];
+let usedRandomNumbers = [];
 
 // Create a constructor function that creates an object associated with each product
 
@@ -46,6 +47,27 @@ randomImages.push(createRandomProducts());
 randomImages.push(createRandomProducts());
 randomImages.push(createRandomProducts());
 
+// Generate 3 Unique products
+
+function generateUniqueIndex(){
+  let randomIndex = createRandomProducts(0, allProducts.length - 1);
+
+  while(usedRandomNumbers.includes(randomIndex)){
+    randomIndex = createRandomProducts(0, allProducts.length - 1);
+  }
+
+  usedRandomNumbers.push(randomIndex);
+
+  if(usedRandomNumbers.length > 3){
+    usedRandomNumbers.shift();
+  }
+  return randomIndex;
+}
+
+generateUniqueIndex();
+generateUniqueIndex();
+generateUniqueIndex();
+
 // Create render method for 1 image
 
 OddDuckProduct.prototype.render = function(){
@@ -54,12 +76,14 @@ OddDuckProduct.prototype.render = function(){
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
   imgContainer.width = 300;
+  this.imgTimesShown++;
+  console.log(this.name, this.imgTimesShown);
 };
 
 //Loop through randomImages array to call render method
 
-for(let i = 0; i < randomImages.length; i++){
-  let randomImage = randomImages[i];
+for(let i = 0; i < usedRandomNumbers.length; i++){
+  let randomImage = usedRandomNumbers[i];
   randomImage.render();
 }
 
