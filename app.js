@@ -21,7 +21,7 @@ let allProducts = [
   new OddDuckProduct('breakfast', 'img/breakfast.jpg'),
   new OddDuckProduct('bubblegum', 'img/bubblegum.jpg'),
   new OddDuckProduct('chair', 'img/chair.jpg'),
-  new OddDuckProduct('cthulhu', 'img/cthulu.jpg'),
+  new OddDuckProduct('cthulhu', 'img/cthulhu.jpg'),
   new OddDuckProduct('dog-duck', 'img/dog-duck.jpg'),
   new OddDuckProduct('dragon', 'img/dragon.jpg'),
   new OddDuckProduct('pen', 'img/pen.jpg'),
@@ -66,4 +66,3 @@ for(let i = 0; i < randomImages.length; i++){
 // Attach an Event Listener to the section of the HTML page where images are displayed.
 
 // Generate 3 new random products after user click.
-
