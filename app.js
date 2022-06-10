@@ -3,7 +3,6 @@
 
 let currentClicks = 0;
 let totalClicksAllowed = 25;
-let randomImages = [];
 let usedRandomNumbers = [];
 
 // Create a constructor function that creates an object associated with each product
@@ -43,11 +42,7 @@ function createRandomProducts(){
   return allProducts[randProduct];
 }
 
-randomImages.push(createRandomProducts());
-randomImages.push(createRandomProducts());
-randomImages.push(createRandomProducts());
-
-// Generate 3 Unique products
+// Generate 3 unique products
 
 function generateUniqueIndex(){
   let randomIndex = createRandomProducts(0, allProducts.length - 1);
@@ -58,7 +53,7 @@ function generateUniqueIndex(){
 
   usedRandomNumbers.push(randomIndex);
 
-  if(usedRandomNumbers.length > 3){
+  if(usedRandomNumbers.length > 6){
     usedRandomNumbers.shift();
   }
   return randomIndex;
@@ -80,7 +75,7 @@ OddDuckProduct.prototype.render = function(){
   console.log(this.name, this.imgTimesShown);
 };
 
-//Loop through randomImages array to call render method
+//Loop through usedRandomNumbers array to call render method
 
 for(let i = 0; i < usedRandomNumbers.length; i++){
   let randomImage = usedRandomNumbers[i];
@@ -88,5 +83,7 @@ for(let i = 0; i < usedRandomNumbers.length; i++){
 }
 
 // Attach an Event Listener to the section of the HTML page where images are displayed.
+
+//document.getElementById('product-images').addEventListener('click', function());
 
 // Generate 3 new random products after user click.
