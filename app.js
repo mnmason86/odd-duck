@@ -35,20 +35,18 @@ let allProducts = [
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
 
-
 // Create render method for 1 image
 
 OddDuckProduct.prototype.render = function(n){
 
   let imgContainer = document.getElementById(`image${n}`);
   imgContainer.addEventListener('click', onClick);
-  console.log(imgContainer);
   let bodyContainer = document.getElementById('product-images');
 
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
 
-  // this.imgTimesShown++;
+  this.imgTimesShown++;
 };
 
 // Random number generator to select imgs from array
@@ -59,7 +57,7 @@ function createRandomProducts(){
 }
 
 // Generate 3 unique products
-// uniqueIndexNumbers = [];
+
 function generateUniqueIndex(){
   let x = 3;
   while (uniqueIndexNumbers.length < x){
