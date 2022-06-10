@@ -71,6 +71,7 @@ OddDuckProduct.prototype.render = function(){
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
   imgContainer.width = 325;
+  imgContainer.height = 325;
   this.imgTimesShown++;
   console.log(this.name, this.imgTimesShown);
 };
