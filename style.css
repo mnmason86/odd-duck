@@ -1,4 +1,7 @@
 div{
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  background-color: aquamarine;
+  padding: 40px;
 }

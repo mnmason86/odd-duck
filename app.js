@@ -70,7 +70,7 @@ OddDuckProduct.prototype.render = function(){
   let imgContainer = document.createElement('img');
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
-  imgContainer.width = 300;
+  imgContainer.width = 325;
   this.imgTimesShown++;
   console.log(this.name, this.imgTimesShown);
 };
