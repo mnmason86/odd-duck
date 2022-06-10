@@ -3,7 +3,7 @@
 
 let currentClicks = 0;
 let totalClicksAllowed = 25;
-let usedRandomNumbers = [];
+let uniqueIndexNumbers = [];
 
 // Create a constructor function that creates an object associated with each product
 
@@ -35,6 +35,18 @@ let allProducts = [
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
 
+// Create render method for 1 image
+
+OddDuckProduct.prototype.render = function(n){
+
+  let imgContainer = document.getElementById(`image${n}`);
+  let bodyContainer = document.getElementById('product-images');
+  imgContainer.addEventListener('click',onClick);
+  imgContainer.src = this.imgPath;
+  bodyContainer.appendChild(imgContainer);
+  this.imgTimesShown++;
+};
+
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
@@ -43,48 +55,33 @@ function createRandomProducts(){
 }
 
 // Generate 3 unique products
-
+// uniqueIndexNumbers = [];
 function generateUniqueIndex(){
-  let randomIndex = createRandomProducts(0, allProducts.length - 1);
-
-  while(usedRandomNumbers.includes(randomIndex)){
-    randomIndex = createRandomProducts(0, allProducts.length - 1);
+  while (uniqueIndexNumbers.length < 3){
+    let randomNumber = createRandomProducts();
+    if (!uniqueIndexNumbers.includes (randomNumber)){
+      uniqueIndexNumbers.push(randomNumber);
+    }
   }
-
-  usedRandomNumbers.push(randomIndex);
-
-  if(usedRandomNumbers.length > 6){
-    usedRandomNumbers.shift();
-  }
-  return randomIndex;
+  return uniqueIndexNumbers;
 }
-
-generateUniqueIndex();
-generateUniqueIndex();
-generateUniqueIndex();
-
-// Create render method for 1 image
-
-OddDuckProduct.prototype.render = function(){
-  let bodyContainer = document.getElementById('product-images');
-  let imgContainer = document.createElement('img');
-  imgContainer.src = this.imgPath;
-  bodyContainer.appendChild(imgContainer);
-  imgContainer.width = 325;
-  imgContainer.height = 325;
-  this.imgTimesShown++;
-  console.log(this.name, this.imgTimesShown);
-};
 
 //Loop through usedRandomNumbers array to call render method
 
-for(let i = 0; i < usedRandomNumbers.length; i++){
-  let randomImage = usedRandomNumbers[i];
-  randomImage.render();
+function generateAndRenderImage(){
+  generateUniqueIndex();
+  for(let i = 0; i < uniqueIndexNumbers.length; i++){
+    let randomImage = uniqueIndexNumbers[i];
+    randomImage.render(i);
+  }
 }
+generateAndRenderImage();
 
-// Attach an Event Listener to the section of the HTML page where images are displayed.
-
-//document.getElementById('product-images').addEventListener('click', function());
 
 // Generate 3 new random products after user click.
+// Attach an Event Listener to the section of the HTML page where images are displayed.
+
+function onClick (){
+  uniqueIndexNumbers.length = 0;
+  generateAndRenderImage();
+}
