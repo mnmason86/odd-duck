@@ -35,16 +35,20 @@ let allProducts = [
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
 
+
 // Create render method for 1 image
 
 OddDuckProduct.prototype.render = function(n){
 
   let imgContainer = document.getElementById(`image${n}`);
+  imgContainer.addEventListener('click', onClick);
+  console.log(imgContainer);
   let bodyContainer = document.getElementById('product-images');
-  imgContainer.addEventListener('click',onClick);
+
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
-  this.imgTimesShown++;
+
+  // this.imgTimesShown++;
 };
 
 // Random number generator to select imgs from array
@@ -57,7 +61,8 @@ function createRandomProducts(){
 // Generate 3 unique products
 // uniqueIndexNumbers = [];
 function generateUniqueIndex(){
-  while (uniqueIndexNumbers.length < 3){
+  let x = 3;
+  while (uniqueIndexNumbers.length < x){
     let randomNumber = createRandomProducts();
     if (!uniqueIndexNumbers.includes (randomNumber)){
       uniqueIndexNumbers.push(randomNumber);
@@ -70,16 +75,13 @@ function generateUniqueIndex(){
 
 function generateAndRenderImage(){
   generateUniqueIndex();
+  //console.log(uniqueIndexNumbers);
   for(let i = 0; i < uniqueIndexNumbers.length; i++){
     let randomImage = uniqueIndexNumbers[i];
     randomImage.render(i);
   }
 }
 generateAndRenderImage();
-
-
-// Generate 3 new random products after user click.
-// Attach an Event Listener to the section of the HTML page where images are displayed.
 
 function onClick (){
   uniqueIndexNumbers.length = 0;
