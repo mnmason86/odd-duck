@@ -40,14 +40,33 @@ let allProducts = [
 OddDuckProduct.prototype.render = function(n){
 
   let imgContainer = document.getElementById(`image${n}`);
-  imgContainer.addEventListener('click', onClick);
   let bodyContainer = document.getElementById('product-images');
-
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
-
+  imgContainer.addEventListener('click', onClick);
   this.imgTimesShown++;
 };
+
+// Event Handler method =======>> QUESTION: How do I get the imgTimesClicked to increment??
+
+function onClick (event){
+  currentClicks++;
+  console.log(currentClicks);
+  if(currentClicks < totalClicksAllowed){
+
+    let imageClicked = event.target;
+
+    for(let i = 0; i < allProducts.length; i++){
+
+      if (imageClicked === allProducts[i]){
+        allProducts[i].imgTimesClicked++;
+        console.log(allProducts[i].imgTimesClicked);
+      }
+    }
+    uniqueIndexNumbers.length = 0;
+    generateAndRenderImage();
+  }
+}
 
 // Random number generator to select imgs from array
 
@@ -73,7 +92,6 @@ function generateUniqueIndex(){
 
 function generateAndRenderImage(){
   generateUniqueIndex();
-  //console.log(uniqueIndexNumbers);
   for(let i = 0; i < uniqueIndexNumbers.length; i++){
     let randomImage = uniqueIndexNumbers[i];
     randomImage.render(i);
@@ -81,7 +99,4 @@ function generateAndRenderImage(){
 }
 generateAndRenderImage();
 
-function onClick (){
-  uniqueIndexNumbers.length = 0;
-  generateAndRenderImage();
-}
+
