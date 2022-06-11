@@ -92,6 +92,7 @@ function onClick(event){
       let img = document.getElementById(`image${i}`);
       img.removeEventListener('click', clickHandler);
     }
+    alert('Voting has ended, please View Results.');
   } else {
     currentClicks++;
     shownProducts[`${id[5]}`].imgTimesClicked++;
