@@ -1,8 +1,8 @@
 'use-strict';
 //Global Variables
 
-let currentClicks = 0;
-let totalClicksAllowed = 25;
+
+
 
 // Create a constructor function that creates an object associated with each product
 
@@ -76,21 +76,6 @@ function generateAndRenderImage(){
 }
 generateAndRenderImage();
 
-// Function to handle 'View Results' click
-
-function clickHandler(n){
-  let imgContainer = document.getElementById(`image${n}`);
-  imgContainer.addEventListener('click', function(){
-    console.log(`Clicked item ${n}`);
-    shownProducts[n].imgTimesClicked++;
-    generateAndRenderImage();
-
-  });
-}
-clickHandler(0);
-clickHandler(1);
-clickHandler(2);
-
 // Render voting data to page via a list
 
 // function renderList(){
@@ -102,4 +87,32 @@ clickHandler(2);
 //     bodyContainer.appendChild(listItem);
 //   }
 // }
+
+// Function to handle 'View Results' click
+let totalClicksAllowed = 235;
+let currentClicks = 0;
+
+function clickHandler(n){
+  let img = document.getElementById(`image${n}`);
+  img.addEventListener('click', onClick);
+}
+
+function onClick(event){
+  let id = event.target.id;
+  if (currentClicks === totalClicksAllowed){
+    for(let i = 0; i < 2; i++){
+      let img = document.getElementById(`image${i}`);
+      img.removeEventListener('click', clickHandler);
+    }
+  } else {
+    currentClicks++;
+    shownProducts[`${id[5]}`].imgTimesClicked++;
+    generateAndRenderImage();
+  }
+}
+
+clickHandler(0);
+clickHandler(1);
+clickHandler(2);
+
 
