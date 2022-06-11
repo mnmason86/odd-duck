@@ -3,7 +3,6 @@
 
 let currentClicks = 0;
 let totalClicksAllowed = 25;
-let uniqueIndexNumbers = [];
 
 // Create a constructor function that creates an object associated with each product
 
@@ -13,6 +12,13 @@ function OddDuckProduct(name, imgPath){
   this.imgTimesShown = 0;
   this.imgTimesClicked = 0;
 }
+
+OddDuckProduct.prototype.render = function(n){
+
+  let imgContainer = document.getElementById(`image${n}`);
+  imgContainer.src = this.imgPath;
+};
+
 let allProducts = [
   new OddDuckProduct('baby-sweep', 'img/baby-sweep.jpg'),
   new OddDuckProduct('banana', 'img/banana.jpg'),
@@ -34,55 +40,19 @@ let allProducts = [
   new OddDuckProduct('water-can', 'img/water-can.jpg'),
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
-
-// Create render method for 1 image
-
-OddDuckProduct.prototype.render = function(n){
-
-  let bodyContainer = document.getElementById('product-images');
-  let imgContainer = document.getElementById(`image${n}`);
-  imgContainer.src = this.imgPath;
-  bodyContainer.appendChild(imgContainer);
-  imgContainer.addEventListener('click', onImageClick);
-  this.imgTimesShown++;
-};
-
-// Event Handler method =======>> QUESTION: How do I get the imgTimesClicked to increment??
-
-function onImageClick (event){
-  currentClicks++;
-  if(currentClicks < totalClicksAllowed){
-
-    let imageClicked = event.target;
-
-    for(let i = 0; i <= allProducts.length; i++){
-
-      if (imageClicked === allProducts[i]){
-        allProducts[i].imgTimesClicked++;
-        console.log(allProducts[i].imgTimesClicked);
-      }
-    }
-    uniqueIndexNumbers.length = 0;
-    generateAndRenderImage();
-  }
-  if(currentClicks === totalClicksAllowed){
-    alert('Thank you for your votes!');
-    removeEventListener();
-  }
-}
-
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
   let randProduct = Math.floor(Math.random() * allProducts.length);
   return allProducts[randProduct];
 }
+// Create render method for 1 image
 
 // Generate 3 unique products
 
 function generateUniqueIndex(){
-  let x = 3;
-  while (uniqueIndexNumbers.length < x){
+  let uniqueIndexNumbers = [];
+  while (uniqueIndexNumbers.length < 3){
     let randomNumber = createRandomProducts();
     if (!uniqueIndexNumbers.includes (randomNumber)){
       uniqueIndexNumbers.push(randomNumber);
@@ -91,33 +61,45 @@ function generateUniqueIndex(){
   return uniqueIndexNumbers;
 }
 
+let shownProducts = [];
+
 //Loop through usedRandomNumbers array to call render method
 
 function generateAndRenderImage(){
-  generateUniqueIndex();
-  for(let i = 0; i < uniqueIndexNumbers.length; i++){
-    let randomImage = uniqueIndexNumbers[i];
-    randomImage.render(i);
+  shownProducts = generateUniqueIndex();
+  for(let i = 0; i < shownProducts.length; i++){
+    let shownProduct = shownProducts[i];
+
+    shownProduct.imgTimesShown++;
+    shownProduct.render(i);
   }
 }
 generateAndRenderImage();
 
-// Render voting data to page via a list
-
-function renderList(){
-  let bodyContainer = document.getElementById('vote-list');
-  for(let i = 0; i < allProducts.length, i++;){
-    let product = allProducts[i];
-    let listItem = document.createElement('li');
-    listItem.innerText = product.name.value;
-    bodyContainer.appendChild(listItem);
-  }
-}
-
 // Function to handle 'View Results' click
 
-let viewResults = document.getElementById('view-results');
-viewResults.addEventListener('click', renderList);
+function clickHandler(n){
+  let imgContainer = document.getElementById(`image${n}`);
+  imgContainer.addEventListener('click', function(){
+    console.log(`Clicked item ${n}`);
+    shownProducts[n].imgTimesClicked++;
+    generateAndRenderImage();
 
+  });
+}
+clickHandler(0);
+clickHandler(1);
+clickHandler(2);
 
+// Render voting data to page via a list
+
+// function renderList(){
+//   let bodyContainer = document.getElementById('vote-list');
+//   for(let i = 0; i < allProducts.length, i++;){
+//     let product = allProducts[i];
+//     let listItem = document.createElement('li');
+//     listItem.innerText = product.name.value;
+//     bodyContainer.appendChild(listItem);
+//   }
+// }
 
