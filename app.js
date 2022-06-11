@@ -39,24 +39,23 @@ let allProducts = [
 
 OddDuckProduct.prototype.render = function(n){
 
-  let imgContainer = document.getElementById(`image${n}`);
   let bodyContainer = document.getElementById('product-images');
+  let imgContainer = document.getElementById(`image${n}`);
   imgContainer.src = this.imgPath;
   bodyContainer.appendChild(imgContainer);
-  imgContainer.addEventListener('click', onClick);
+  imgContainer.addEventListener('click', onImageClick);
   this.imgTimesShown++;
 };
 
 // Event Handler method =======>> QUESTION: How do I get the imgTimesClicked to increment??
 
-function onClick (event){
+function onImageClick (event){
   currentClicks++;
-  console.log(currentClicks);
   if(currentClicks < totalClicksAllowed){
 
     let imageClicked = event.target;
 
-    for(let i = 0; i < allProducts.length; i++){
+    for(let i = 0; i <= allProducts.length; i++){
 
       if (imageClicked === allProducts[i]){
         allProducts[i].imgTimesClicked++;
@@ -65,6 +64,10 @@ function onClick (event){
     }
     uniqueIndexNumbers.length = 0;
     generateAndRenderImage();
+  }
+  if(currentClicks === totalClicksAllowed){
+    alert('Thank you for your votes!');
+    removeEventListener();
   }
 }
 
@@ -98,5 +101,23 @@ function generateAndRenderImage(){
   }
 }
 generateAndRenderImage();
+
+// Render voting data to page via a list
+
+function renderList(){
+  let bodyContainer = document.getElementById('vote-list');
+  for(let i = 0; i < allProducts.length, i++;){
+    let product = allProducts[i];
+    let listItem = document.createElement('li');
+    listItem.innerText = product.name.value;
+    bodyContainer.appendChild(listItem);
+  }
+}
+
+// Function to handle 'View Results' click
+
+let viewResults = document.getElementById('view-results');
+viewResults.addEventListener('click', renderList);
+
 
 
