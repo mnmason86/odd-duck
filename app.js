@@ -76,20 +76,8 @@ function generateAndRenderImage(){
 }
 generateAndRenderImage();
 
-// Render voting data to page via a list
-
-// function renderList(){
-//   let bodyContainer = document.getElementById('vote-list');
-//   for(let i = 0; i < allProducts.length, i++;){
-//     let product = allProducts[i];
-//     let listItem = document.createElement('li');
-//     listItem.innerText = product.name.value;
-//     bodyContainer.appendChild(listItem);
-//   }
-// }
-
 // Function to handle 'View Results' click
-let totalClicksAllowed = 235;
+let totalClicksAllowed = 25;
 let currentClicks = 0;
 
 function clickHandler(n){
@@ -114,5 +102,22 @@ function onClick(event){
 clickHandler(0);
 clickHandler(1);
 clickHandler(2);
+
+// Render voting data to page via a list
+
+function renderList(){
+  let bodyContainer = document.getElementById('vote-list');
+
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    let listItem = document.createElement('li');
+    listItem.innerText = `${product.name} was clicked ${product.imgTimesClicked} times, and seen ${product.imgTimesShown} times.`;
+    bodyContainer.appendChild(listItem);
+  }
+}
+
+let resultsButton = document.getElementById('view-results');
+resultsButton.addEventListener('click', renderList);
+
 
 
