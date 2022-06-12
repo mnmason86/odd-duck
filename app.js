@@ -1,8 +1,4 @@
 'use-strict';
-//Global Variables
-
-
-
 
 // Create a constructor function that creates an object associated with each product
 
@@ -12,12 +8,6 @@ function OddDuckProduct(name, imgPath){
   this.imgTimesShown = 0;
   this.imgTimesClicked = 0;
 }
-
-OddDuckProduct.prototype.render = function(n){
-
-  let imgContainer = document.getElementById(`image${n}`);
-  imgContainer.src = this.imgPath;
-};
 
 let allProducts = [
   new OddDuckProduct('baby-sweep', 'img/baby-sweep.jpg'),
@@ -40,13 +30,21 @@ let allProducts = [
   new OddDuckProduct('water-can', 'img/water-can.jpg'),
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
+
+// Render method
+
+OddDuckProduct.prototype.render = function(n){
+
+  let imgContainer = document.getElementById(`image${n}`);
+  imgContainer.src = this.imgPath;
+};
+
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
   let randProduct = Math.floor(Math.random() * allProducts.length);
   return allProducts[randProduct];
 }
-// Create render method for 1 image
 
 // Generate 3 unique products
 
@@ -114,11 +112,56 @@ function renderList(){
     let listItem = document.createElement('li');
     listItem.innerText = `${product.name} was clicked ${product.imgTimesClicked} times, and seen ${product.imgTimesShown} times.`;
     bodyContainer.appendChild(listItem);
+    // OddDuckProduct.prototype.save();
   }
 }
 
 let resultsButton = document.getElementById('view-results');
 resultsButton.addEventListener('click', renderList);
+
+//---------------------------------------------------------------
+
+//Implement Local Storage / Persistent data between refreshes/restarts.
+
+// if (localStorage.getItem('savedProduct')){
+//   let retrievedProducts = localStorage.getItem('savedProduct');
+//   let parsed = JSON.parse(retrievedProducts);
+
+//   let parsedName = parsed.name;
+//   let parsedImgPath = parsed.imgPath;
+//   let parsedImgTimesShown = parsed.imgTimesShown;
+//   let parsedImgTimesClicked = parsed.imgTimesClicked;
+
+//   let parsedProduct = new OddDuckProduct(parsedName, parsedImgPath, parsedImgTimesShown, parsedImgTimesClicked);
+//   parsedProduct.render();
+// }
+
+// OddDuckProduct.prototype.save = function(){
+//   if (localStorage.getItem('savedProducts') === null){
+//     let emptyArray = JSON.stringify([]);
+//     localStorage.setItem('savedProducts', emptyArray);
+//   }
+
+//   let retrievedProducts = localStorage.getItem('savedProducts');
+//   retrievedProducts = JSON.parse(retrievedProducts);
+//   retrievedProducts.push(this);
+
+//   let savedProducts = JSON.stringify(retrievedProducts);
+//   localStorage.setItem('savedProducts', savedProducts);
+// };
+
+
+// OddDuckProduct.prototype.save = function(){
+
+//   JSON.stringify(this);
+//   localStorage.setItem('allProducts', allProducts);
+//   console.log(this.name);
+//   // for(let i = 0; i < allProducts.length; i++){
+//   //   let product = allProducts[i];
+
+// };
+
+
 
 
 
