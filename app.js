@@ -36,7 +36,7 @@ let allProducts = [
 OddDuckProduct.prototype.render = function(n){
 
   let imgContainer = document.getElementById(`image${n}`);
-  imgContainer.src = this.imgPath;
+  imgContainer.src = (this.imgPath);
 };
 
 // Random number generator to select imgs from array
@@ -112,8 +112,8 @@ function renderList(){
     let listItem = document.createElement('li');
     listItem.innerText = `${product.name} was clicked ${product.imgTimesClicked} times, and seen ${product.imgTimesShown} times.`;
     bodyContainer.appendChild(listItem);
-    // OddDuckProduct.prototype.save();
   }
+  save();
 }
 
 let resultsButton = document.getElementById('view-results');
@@ -123,44 +123,29 @@ resultsButton.addEventListener('click', renderList);
 
 //Implement Local Storage / Persistent data between refreshes/restarts.
 
-// if (localStorage.getItem('savedProduct')){
-//   let retrievedProducts = localStorage.getItem('savedProduct');
-//   let parsed = JSON.parse(retrievedProducts);
 
-//   let parsedName = parsed.name;
-//   let parsedImgPath = parsed.imgPath;
-//   let parsedImgTimesShown = parsed.imgTimesShown;
-//   let parsedImgTimesClicked = parsed.imgTimesClicked;
+function save(){
 
-//   let parsedProduct = new OddDuckProduct(parsedName, parsedImgPath, parsedImgTimesShown, parsedImgTimesClicked);
-//   parsedProduct.render();
-// }
+  if (localStorage.getItem('productData') === null){
+    let savedProducts = [];
+    JSON.stringify(savedProducts);
+    localStorage.setItem('productData', savedProducts);
 
-// OddDuckProduct.prototype.save = function(){
-//   if (localStorage.getItem('savedProducts') === null){
-//     let emptyArray = JSON.stringify([]);
-//     localStorage.setItem('savedProducts', emptyArray);
-//   }
+    for(let i = 0; i < allProducts.length; i++) {
+      let product = JSON.stringify(allProducts[i]);
+      savedProducts.push(product);
+      localStorage.setItem('productData', savedProducts);
+    }
+  } else if (localStorage.getItem('productData')) {
+    let existingProducts = [];
+    JSON.stringify(existingProducts);
+    localStorage.setItem('moreProductData', existingProducts);
 
-//   let retrievedProducts = localStorage.getItem('savedProducts');
-//   retrievedProducts = JSON.parse(retrievedProducts);
-//   retrievedProducts.push(this);
-
-//   let savedProducts = JSON.stringify(retrievedProducts);
-//   localStorage.setItem('savedProducts', savedProducts);
-// };
-
-
-// OddDuckProduct.prototype.save = function(){
-
-//   JSON.stringify(this);
-//   localStorage.setItem('allProducts', allProducts);
-//   console.log(this.name);
-//   // for(let i = 0; i < allProducts.length; i++){
-//   //   let product = allProducts[i];
-
-// };
-
+    let oldData = JSON.parse(localStorage.getItem('productData'));
+    existingProducts.push(oldData);
+    console.log(existingProducts);
+  }
+}
 
 
 
