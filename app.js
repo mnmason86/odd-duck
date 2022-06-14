@@ -39,6 +39,37 @@ OddDuckProduct.prototype.render = function(n){
   imgContainer.src = (this.imgPath);
 };
 
+//Implement Local Storage / Persistent data between refreshes/restarts.
+
+
+function save(){
+
+  let savedProducts = [];
+
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+
+}
+
+OddDuckProduct.prototype.loadPriorData = function (){
+
+  let priorData = localStorage.getItem('productData');
+  priorData = JSON.parse(priorData);
+  priorData.push(this);
+
+  for(let i = 0; i < allProducts.length; i++){
+    let product = allProducts[i];
+    priorData.push(product);
+  }
+
+  priorData = JSON.stringify(priorData);
+  localStorage.setItem('productData', priorData);
+};
+
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
@@ -84,6 +115,7 @@ function clickHandler(n){
 }
 
 function onClick(event){
+
   let id = event.target.id;
   if (currentClicks === totalClicksAllowed){
     for(let i = 0; i < 2; i++){
@@ -95,6 +127,11 @@ function onClick(event){
     currentClicks++;
     shownProducts[`${id[5]}`].imgTimesClicked++;
     generateAndRenderImage();
+  }
+  if(localStorage.getItem('productData')){
+    OddDuckProduct.prototype.loadPriorData();
+  } else if (localStorage.getItem('productData') === null){
+    save();
   }
 }
 
@@ -120,20 +157,8 @@ resultsButton.addEventListener('click', renderList);
 
 //---------------------------------------------------------------
 
-//Implement Local Storage / Persistent data between refreshes/restarts.
 
 
-function save(){
 
-  let savedProducts = [];
-
-  for(let i = 0; i < allProducts.length; i++) {
-    let product = allProducts[i];
-    savedProducts.push(product);
-  }
-  savedProducts = JSON.stringify(savedProducts);
-  localStorage.setItem('productData', savedProducts);
-
-}
 
 
