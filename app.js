@@ -145,7 +145,7 @@ function showChart(){
     let product = allProducts[i];
     labels.push(product.name);
     votes.push(product.imgTimesClicked);
-  } 
+  }
   let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -180,5 +180,4 @@ function showChart(){
   });
 }
 
-showChart();
 
