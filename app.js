@@ -106,7 +106,7 @@ clickHandler(2);
 
 function renderChart(){
   save();
-  showChart();
+  
 }
 
 let resultsButton = document.getElementById('view-results');
@@ -136,7 +136,7 @@ function save(){
 
 function showChart(){
 
-  let ctx = document.getElementById('my-chart').getContext('2D');
+  let ctx = document.getElementById('my-chart').getContext('2d');
 
   let labels = [];
   let votes = [];
@@ -146,6 +146,7 @@ function showChart(){
     labels.push(product.name);
     votes.push(product.imgTimesClicked);
   }
+  //console.log(labels, votes);
   let myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -166,7 +167,7 @@ function showChart(){
             'rgba(255, 99, 132, 0.2',
             'rgba(54, 162, 235, 0.2',
           ],
-          borderWidth: 2,
+          borderWidth: 1,
         },
       ],
     },
@@ -180,4 +181,4 @@ function showChart(){
   });
 }
 
-
+showChart();
