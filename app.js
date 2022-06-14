@@ -104,20 +104,13 @@ clickHandler(2);
 
 // Render voting data to page via a list
 
-function renderList(){
-  let bodyContainer = document.getElementById('vote-list');
-
-  for(let i = 0; i < allProducts.length; i++) {
-    let product = allProducts[i];
-    let listItem = document.createElement('li');
-    listItem.innerText = `${product.name} was clicked ${product.imgTimesClicked} times, and seen ${product.imgTimesShown} times.`;
-    bodyContainer.appendChild(listItem);
-  }
+function renderChart(){
   save();
+  showChart();
 }
 
 let resultsButton = document.getElementById('view-results');
-resultsButton.addEventListener('click', renderList);
+resultsButton.addEventListener('click', renderChart);
 
 //---------------------------------------------------------------
 
@@ -139,5 +132,53 @@ function save(){
   }
 }
 
+// Create bar graph in Canvas.js
 
+function showChart(){
+
+  let ctx = document.getElementById('my-chart').getContext('2D');
+
+  let labels = [];
+  let votes = [];
+
+  for (let i = 0; i < allProducts.length; i++){
+    let product = allProducts[i];
+    labels.push(product.name);
+    votes.push(product.imgTimesClicked);
+  } 
+  let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: '# of Votes',
+          data: votes,
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2',
+            'rgba(54, 162, 235, 0.2',
+            'rgba(255, 99, 132, 0.2',
+            'rgba(54, 162, 235, 0.2',
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 0.2',
+            'rgba(54, 162, 235, 0.2',
+            'rgba(255, 99, 132, 0.2',
+            'rgba(54, 162, 235, 0.2',
+          ],
+          borderWidth: 2,
+        },
+      ],
+    },
+    options:{
+      scales:{
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
+}
+
+showChart();
 
