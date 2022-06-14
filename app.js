@@ -39,6 +39,38 @@ OddDuckProduct.prototype.render = function(n){
   imgContainer.src = (this.imgPath);
 };
 
+//Implement Local Storage / Persistent data between refreshes/restarts.
+
+
+function saveInitial(){
+
+  let savedProducts = [];
+
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+}
+
+OddDuckProduct.prototype.loadPriorData = function (){
+
+  let savedProducts = localStorage.getItem('productData');
+
+  savedProducts = JSON.parse(savedProducts);
+  savedProducts.push(this);
+
+  for(let i = 0; i < allProducts.length; i++){
+    let product = allProducts[i];
+
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+};
+
+
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
@@ -84,6 +116,7 @@ function clickHandler(n){
 }
 
 function onClick(event){
+
   let id = event.target.id;
   if (currentClicks === totalClicksAllowed){
     for(let i = 0; i < 2; i++){
@@ -96,43 +129,24 @@ function onClick(event){
     shownProducts[`${id[5]}`].imgTimesClicked++;
     generateAndRenderImage();
   }
+  if(localStorage.getItem('productData')){
+    OddDuckProduct.prototype.loadPriorData();
+  } else if (localStorage.getItem('productData') === null){
+    saveInitial();
+  }
 }
 
 clickHandler(0);
 clickHandler(1);
 clickHandler(2);
 
-// Render voting data to page via a list
-
-function renderChart(){
-  save();
-  
-}
+// Render voting data to page via a chart
 
 let resultsButton = document.getElementById('view-results');
-resultsButton.addEventListener('click', renderChart);
-
-//---------------------------------------------------------------
-
-//Implement Local Storage / Persistent data between refreshes/restarts.
+resultsButton.addEventListener('click', showChart);
 
 
-function save(){
-
-  if (localStorage.getItem('productData') === null){
-    let savedProducts = [];
-    JSON.stringify(savedProducts);
-    localStorage.setItem('productData', savedProducts);
-
-    for(let i = 0; i < allProducts.length; i++) {
-      let product = JSON.stringify(allProducts[i]);
-      savedProducts.push(product);
-      localStorage.setItem('productData', savedProducts);
-    }
-  }
-}
-
-// Create bar graph in Canvas.js
+// Create bar graph in Canvas.js =======================================================================
 
 function showChart(){
 
@@ -140,11 +154,13 @@ function showChart(){
 
   let labels = [];
   let votes = [];
+  let views = [];
 
   for (let i = 0; i < allProducts.length; i++){
     let product = allProducts[i];
     labels.push(product.name);
     votes.push(product.imgTimesClicked);
+    views.push(product.imgTimesShown);
   }
   //console.log(labels, votes);
   let myChart = new Chart(ctx, {
@@ -156,16 +172,21 @@ function showChart(){
           label: '# of Votes',
           data: votes,
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2',
-            'rgba(54, 162, 235, 0.2',
-            'rgba(255, 99, 132, 0.2',
-            'rgba(54, 162, 235, 0.2',
+            'rgba(255, 99, 132',
           ],
           borderColor: [
-            'rgba(255, 99, 132, 0.2',
-            'rgba(54, 162, 235, 0.2',
-            'rgba(255, 99, 132, 0.2',
-            'rgba(54, 162, 235, 0.2',
+            'rgba(255, 99, 132',
+          ],
+          borderWidth: 1,
+        },
+        {
+          label: '# of Views',
+          data: views,
+          backgroundColor: [
+            'rgba(54, 162, 235',
+          ],
+          borderColor: [
+            'rgba(54, 162, 235',
           ],
           borderWidth: 1,
         },
@@ -175,10 +196,11 @@ function showChart(){
       scales:{
         y: {
           beginAtZero: true,
+          suggestedMax: 12
         },
       },
     },
   });
+  localStorage.clear();
 }
 
-showChart();
