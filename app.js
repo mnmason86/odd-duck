@@ -39,6 +39,37 @@ OddDuckProduct.prototype.render = function(n){
   imgContainer.src = (this.imgPath);
 };
 
+//Implement Local Storage / Persistent data between refreshes/restarts.
+
+
+function saveInitial(){
+
+  let savedProducts = [];
+
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+}
+
+OddDuckProduct.prototype.loadPriorData = function (){
+
+  let savedProducts = localStorage.getItem('productData');
+
+  savedProducts = JSON.parse(savedProducts);
+  savedProducts.push(this);
+
+  for(let i = 0; i < allProducts.length; i++){
+    let product = allProducts[i];
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+
+};
+
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
@@ -84,6 +115,7 @@ function clickHandler(n){
 }
 
 function onClick(event){
+
   let id = event.target.id;
   if (currentClicks === totalClicksAllowed){
     for(let i = 0; i < 2; i++){
@@ -96,6 +128,11 @@ function onClick(event){
     shownProducts[`${id[5]}`].imgTimesClicked++;
     generateAndRenderImage();
   }
+  if(localStorage.getItem('productData')){
+    OddDuckProduct.prototype.loadPriorData();
+  } else if (localStorage.getItem('productData') === null){
+    saveInitial();
+  }
 }
 
 clickHandler(0);
@@ -104,9 +141,16 @@ clickHandler(2);
 
 // Render voting data to page via a list
 
-function renderChart(){
-  save();
-  
+function renderList(){
+  let bodyContainer = document.getElementById('vote-list');
+
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    let listItem = document.createElement('li');
+    listItem.innerText = `${product.name} was clicked ${product.imgTimesClicked} times, and seen ${product.imgTimesShown} times.`;
+    bodyContainer.appendChild(listItem);
+  }
+
 }
 
 let resultsButton = document.getElementById('view-results');
@@ -114,23 +158,8 @@ resultsButton.addEventListener('click', renderChart);
 
 //---------------------------------------------------------------
 
-//Implement Local Storage / Persistent data between refreshes/restarts.
 
 
-function save(){
-
-  if (localStorage.getItem('productData') === null){
-    let savedProducts = [];
-    JSON.stringify(savedProducts);
-    localStorage.setItem('productData', savedProducts);
-
-    for(let i = 0; i < allProducts.length; i++) {
-      let product = JSON.stringify(allProducts[i]);
-      savedProducts.push(product);
-      localStorage.setItem('productData', savedProducts);
-    }
-  }
-}
 
 // Create bar graph in Canvas.js
 
