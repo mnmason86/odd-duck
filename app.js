@@ -1,8 +1,4 @@
 'use-strict';
-//Global Variables
-
-
-
 
 // Create a constructor function that creates an object associated with each product
 
@@ -12,12 +8,6 @@ function OddDuckProduct(name, imgPath){
   this.imgTimesShown = 0;
   this.imgTimesClicked = 0;
 }
-
-OddDuckProduct.prototype.render = function(n){
-
-  let imgContainer = document.getElementById(`image${n}`);
-  imgContainer.src = this.imgPath;
-};
 
 let allProducts = [
   new OddDuckProduct('baby-sweep', 'img/baby-sweep.jpg'),
@@ -40,13 +30,52 @@ let allProducts = [
   new OddDuckProduct('water-can', 'img/water-can.jpg'),
   new OddDuckProduct('wine-glass', 'img/wine-glass.jpg'),
 ];
+
+// Render method
+
+OddDuckProduct.prototype.render = function(n){
+
+  let imgContainer = document.getElementById(`image${n}`);
+  imgContainer.src = (this.imgPath);
+};
+
+//Implement Local Storage / Persistent data between refreshes/restarts.
+
+
+function saveInitial(){
+
+  let savedProducts = [];
+
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+}
+
+OddDuckProduct.prototype.loadPriorData = function (){
+
+  let savedProducts = localStorage.getItem('productData');
+
+  savedProducts = JSON.parse(savedProducts);
+  savedProducts.push(this);
+
+  for(let i = 0; i < allProducts.length; i++){
+    let product = allProducts[i];
+    savedProducts.push(product);
+  }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
+
+};
+
 // Random number generator to select imgs from array
 
 function createRandomProducts(){
   let randProduct = Math.floor(Math.random() * allProducts.length);
   return allProducts[randProduct];
 }
-// Create render method for 1 image
 
 // Generate 3 unique products
 
@@ -86,6 +115,7 @@ function clickHandler(n){
 }
 
 function onClick(event){
+
   let id = event.target.id;
   if (currentClicks === totalClicksAllowed){
     for(let i = 0; i < 2; i++){
@@ -97,6 +127,11 @@ function onClick(event){
     currentClicks++;
     shownProducts[`${id[5]}`].imgTimesClicked++;
     generateAndRenderImage();
+  }
+  if(localStorage.getItem('productData')){
+    OddDuckProduct.prototype.loadPriorData();
+  } else if (localStorage.getItem('productData') === null){
+    saveInitial();
   }
 }
 
@@ -119,6 +154,11 @@ function renderList(){
 
 let resultsButton = document.getElementById('view-results');
 resultsButton.addEventListener('click', renderList);
+
+//---------------------------------------------------------------
+
+
+
 
 
 
