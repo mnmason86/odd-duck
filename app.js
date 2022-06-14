@@ -136,16 +136,12 @@ function save(){
       savedProducts.push(product);
       localStorage.setItem('productData', savedProducts);
     }
-  } else if (localStorage.getItem('productData')) {
-    let existingProducts = [];
-    JSON.stringify(existingProducts);
-    localStorage.setItem('moreProductData', existingProducts);
-
-    let oldData = JSON.parse(localStorage.getItem('productData'));
-    existingProducts.push(oldData);
-    console.log(existingProducts);
   }
 }
+
+// Set Canvas for bar chart
+
+
 
 
 
