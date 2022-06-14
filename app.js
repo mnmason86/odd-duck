@@ -113,7 +113,6 @@ function renderList(){
     listItem.innerText = `${product.name} was clicked ${product.imgTimesClicked} times, and seen ${product.imgTimesShown} times.`;
     bodyContainer.appendChild(listItem);
   }
-  save();
 }
 
 let resultsButton = document.getElementById('view-results');
@@ -126,18 +125,15 @@ resultsButton.addEventListener('click', renderList);
 
 function save(){
 
-  if (localStorage.getItem('productData') === null){
-    let savedProducts = [];
-    JSON.stringify(savedProducts);
-    localStorage.setItem('productData', savedProducts);
+  let savedProducts = [];
 
-    for(let i = 0; i < allProducts.length; i++) {
-      let product = JSON.stringify(allProducts[i]);
-      savedProducts.push(product);
-      localStorage.setItem('productData', savedProducts);
-    }
+  for(let i = 0; i < allProducts.length; i++) {
+    let product = allProducts[i];
+    savedProducts.push(product);
   }
-}
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
 
+}
 
 
