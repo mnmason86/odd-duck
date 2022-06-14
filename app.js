@@ -139,10 +139,5 @@ function save(){
   }
 }
 
-// Set Canvas for bar chart
-
-
-
-
 
 
