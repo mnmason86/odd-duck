@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css" />
   <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 </head>
 <body>
   <header>
     <h1>Odd Duck Products</h1>
   </header>
-  <body>
     <h4>Check out Odd Duck's amazing line of products by clicking the image of the product you like most!</h4>
     <div id="product-images">
       <img id="image0">
@@ -19,8 +19,7 @@
       <img id="image2">
     </div>
     <button type="button" id="view-results">View Results</button>
-    <ul id="vote-list"></ul>
-  </body>
+    <canvas id="my-chart" width="400" height="400">This browser does not support canvas.</canvas>
   <footer>Copyright &copy; Mandy Mason 2022</footer>
   <script src="app.js"></script>
 </body>
