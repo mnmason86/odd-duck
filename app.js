@@ -42,7 +42,7 @@ OddDuckProduct.prototype.render = function(n){
 //Implement Local Storage / Persistent data between refreshes/restarts.
 
 
-function save(){
+function saveInitial(){
 
   let savedProducts = [];
 
@@ -52,22 +52,22 @@ function save(){
   }
   savedProducts = JSON.stringify(savedProducts);
   localStorage.setItem('productData', savedProducts);
-
 }
 
 OddDuckProduct.prototype.loadPriorData = function (){
 
-  let priorData = localStorage.getItem('productData');
-  priorData = JSON.parse(priorData);
-  priorData.push(this);
+  let savedProducts = localStorage.getItem('productData');
+
+  savedProducts = JSON.parse(savedProducts);
+  savedProducts.push(this);
 
   for(let i = 0; i < allProducts.length; i++){
     let product = allProducts[i];
-    priorData.push(product);
+    savedProducts.push(product);
   }
+  savedProducts = JSON.stringify(savedProducts);
+  localStorage.setItem('productData', savedProducts);
 
-  priorData = JSON.stringify(priorData);
-  localStorage.setItem('productData', priorData);
 };
 
 // Random number generator to select imgs from array
@@ -131,7 +131,7 @@ function onClick(event){
   if(localStorage.getItem('productData')){
     OddDuckProduct.prototype.loadPriorData();
   } else if (localStorage.getItem('productData') === null){
-    save();
+    saveInitial();
   }
 }
 
