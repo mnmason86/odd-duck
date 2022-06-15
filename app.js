@@ -56,18 +56,13 @@ function saveInitial(){
 
 OddDuckProduct.prototype.loadPriorData = function (){
 
-  let savedProducts = localStorage.getItem('productData');
+  let getPriorData = localStorage.getItem('productData');
+  getPriorData = JSON.parse(getPriorData);
 
-  savedProducts = JSON.parse(savedProducts);
-  savedProducts.push(this);
-
-  for(let i = 0; i < allProducts.length; i++){
-    let product = allProducts[i];
-
-    savedProducts.push(product);
+  for(let i = 0; i < getPriorData.length; i++){
+    let priorDatum = getPriorData[i];
+    allProducts.push(new OddDuckProduct(priorDatum.name, priorDatum.imgPath, priorDatum.imgTimesShown,priorDatum.imgTimesClicked));
   }
-  savedProducts = JSON.stringify(savedProducts);
-  localStorage.setItem('productData', savedProducts);
 };
 
 
