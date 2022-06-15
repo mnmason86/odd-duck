@@ -97,15 +97,16 @@ function generateUniqueIndex() {
 
   while (uniqueIndexNumbers.length < 3) {
     let randomNumber = createRandomProducts();
-    if (!uniqueIndexNumbers.includes(randomNumber)) {
+    if (!uniqueIndexNumbers.includes(randomNumber) && !priorIndexNumbers.includes(randomNumber)) {
       uniqueIndexNumbers.push(randomNumber);
       priorIndexNumbers.push(randomNumber);
     }
   }
+  if (priorIndexNumbers.length === 6){
+    priorIndexNumbers.splice(0,3);
+  }
   return uniqueIndexNumbers;
 }
-
-
 
 //Loop through shownProducts arrays to call render method
 
@@ -138,6 +139,7 @@ function onClick(event) {
   } else {
     currentClicks++;
     shownProducts[`${id[5]}`].imgTimesClicked++;
+
     generateAndRenderImage();
   }
 }
