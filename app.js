@@ -1,11 +1,14 @@
 "use-strict";
+
 //Global Variables
 
 let totalClicksAllowed = 25;
 let currentClicks = 0;
+
 let shownProducts = [];
 let savedProducts = [];
 let loadedProducts = [];
+let priorIndexNumbers = [];
 
 let resultsButton = document.getElementById("view-results");
 resultsButton.addEventListener("click", showChart);
@@ -70,7 +73,6 @@ function load() {
   }
   savedProducts = JSON.stringify(loadedProducts);
   localStorage.setItem("productData", savedProducts);
-  console.log(loadedProducts);
 }
 
 function accessStorage() {
@@ -92,26 +94,30 @@ function createRandomProducts() {
 
 function generateUniqueIndex() {
   let uniqueIndexNumbers = [];
+
   while (uniqueIndexNumbers.length < 3) {
     let randomNumber = createRandomProducts();
     if (!uniqueIndexNumbers.includes(randomNumber)) {
       uniqueIndexNumbers.push(randomNumber);
+      priorIndexNumbers.push(randomNumber);
     }
   }
   return uniqueIndexNumbers;
 }
 
-//Loop through usedRandomNumbers array to call render method
+
+
+//Loop through shownProducts arrays to call render method
 
 function generateAndRenderImage() {
   shownProducts = generateUniqueIndex();
   for (let i = 0; i < shownProducts.length; i++) {
     let shownProduct = shownProducts[i];
-
     shownProduct.imgTimesShown++;
     shownProduct.render(i);
   }
 }
+
 generateAndRenderImage();
 
 // Function to handle 'View Results' click
