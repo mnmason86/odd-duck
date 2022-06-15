@@ -16,7 +16,7 @@ h4{
   background-color: rgb(244, 244, 7);
   color: rgba(15, 150, 208, 0.769);
 }
-div{
+#product-images{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -40,20 +40,16 @@ button{
   font-size: 20px;
   font-weight: bold;
 }
-ul{
+#canvas-div{
+  background-color: white;
+  height: 800px;
+  width: 75%;
   display: block;
   margin: auto;
-  text-align: center;
-  list-style: none;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 18px;
-  line-height: 2rem;
-  color:blueviolet;
-  font-weight: medium;
 }
 footer{
   display: block;
-  margin: 40px auto;
+  margin: 40px auto 0;
   text-align: center;
   font-family: 'Courier New', Courier, monospace;
   color: rgba(15, 150, 208, 0.769);
