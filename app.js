@@ -64,12 +64,12 @@ function save() {
 
 function load() {
   let parsedProducts = localStorage.getItem("productData");
-  JSON.parse(parsedProducts);
+  parsedProducts = JSON.parse(parsedProducts);
+  parsedProducts = allProducts;
 
-  for (let i = 0; i < allProducts.length; i++) {
-    let product = allProducts[i];
+  for (let i = 0; i < parsedProducts.length; i++) {
+    let product = parsedProducts[i];
     loadedProducts.push(product);
-
   }
   savedProducts = JSON.stringify(loadedProducts);
   localStorage.setItem("productData", savedProducts);
@@ -97,13 +97,16 @@ function generateUniqueIndex() {
 
   while (uniqueIndexNumbers.length < 3) {
     let randomNumber = createRandomProducts();
-    if (!uniqueIndexNumbers.includes(randomNumber) && !priorIndexNumbers.includes(randomNumber)) {
+    if (
+      !uniqueIndexNumbers.includes(randomNumber) &&
+      !priorIndexNumbers.includes(randomNumber)
+    ) {
       uniqueIndexNumbers.push(randomNumber);
       priorIndexNumbers.push(randomNumber);
     }
   }
-  if (priorIndexNumbers.length === 6){
-    priorIndexNumbers.splice(0,3);
+  if (priorIndexNumbers.length === 6) {
+    priorIndexNumbers.splice(0, 3);
   }
   return uniqueIndexNumbers;
 }
