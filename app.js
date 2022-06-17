@@ -54,34 +54,22 @@ OddDuckProduct.prototype.render = function (n) {
 //Implement Local Storage / Persistent data between refreshes/restarts.
 
 function save() {
-  for (let i = 0; i < allProducts.length; i++) {
-    let product = allProducts[i];
-    savedProducts.push(product);
-  }
-  savedProducts = JSON.stringify(savedProducts);
-  localStorage.setItem("productData", savedProducts);
+  if (localStorage.getItem('savedData') === null){
+    let stringifyData = JSON.stringify(allProducts);
+    localStorage.setItem('savedData', stringifyData);
+  } else (load());
 }
-
 function load() {
-  let parsedProducts = localStorage.getItem("productData");
-  parsedProducts = JSON.parse(parsedProducts);
-  parsedProducts = allProducts;
-
-  for (let i = 0; i < parsedProducts.length; i++) {
-    let product = parsedProducts[i];
-    loadedProducts.push(product);
+  let returnedData = localStorage.getItem('savedData');
+  returnedData = JSON.parse(returnedData);
+  for (let i = 0; i < allProducts.length; i++){
+    allProducts[i].imgTimesShown = allProducts[i].imgTimesShown + returnedData[i].imgTimesShown;
+    allProducts[i].imgTimesClicked = allProducts[i].imgTimesClicked + returnedData[i].imgTimesClicked;
   }
-  savedProducts = JSON.stringify(loadedProducts);
-  localStorage.setItem("productData", savedProducts);
+  let dataSum = JSON.stringify(allProducts);
+  localStorage.setItem('savedData', dataSum);
 }
 
-function accessStorage() {
-  if (localStorage.getItem("productData")) {
-    load();
-  } else if (localStorage.getItem("productData") === null) {
-    save();
-  }
-}
 
 // Random number generator to select imgs from array
 
@@ -154,7 +142,7 @@ clickHandler(2);
 // Create bar graph in Canvas.js =======================================================================
 
 function showChart() {
-  accessStorage();
+  save();
   let ctx = document.getElementById("my-chart").getContext("2d");
 
   let labels = [];
@@ -193,7 +181,7 @@ function showChart() {
       scales: {
         y: {
           beginAtZero: true,
-          suggestedMax: 12,
+          suggestedMax: 30,
         },
       },
     },
